@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  ref: "3.5.0-SNAPSHOT"
+  ref: "0.0.2-SNAPSHOT"
 
 imagePullSecrets: []
 nameOverride: ""

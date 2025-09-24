@@ -38,7 +38,7 @@ jobs:
       - name: Build Docker Image
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-            docker build --tag $CR_URL/$CR_REPOSITORY/spring-feature-service:3.5.0-SNAPSHOT --file docker/Dockerfile .
+          docker build --tag $CR_URL/$CR_REPOSITORY/feature-service:0.0.2-SNAPSHOT --file docker/Dockerfile .
 
       - name: Docker login to Yandex Cloud CR
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -46,7 +46,7 @@ jobs:
 
       - name: Docker push to Yandex Cloud CR
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: docker push $CR_URL/$CR_REPOSITORY/spring-feature-service:3.5.0-SNAPSHOT
+        run: docker push $CR_URL/$CR_REPOSITORY/feature-service:0.0.2-SNAPSHOT
 
       - name: Docker logout
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -66,4 +66,4 @@ jobs:
           touch ~/.kube/config
           echo "$KUBE_CONFIG_BASE64" | base64 --decode > ~/.kube/config
           chmod 600 ~/.kube/config
-          helm upgrade --install feature-service . --set image.ref=$CR_URL/$CR_REPOSITORY/spring-feature-service:3.5.0-SNAPSHOT -f values.yaml
+          helm upgrade --install feature-service . --set image.ref=$CR_URL/$CR_REPOSITORY/feature-service:0.0.2-SNAPSHOT -f values.yaml
