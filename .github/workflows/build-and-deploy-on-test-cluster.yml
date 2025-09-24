@@ -38,7 +38,7 @@ jobs:
       - name: Build Docker Image
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          docker build --tag $CR_URL/$CR_REPOSITORY/spring-feature-service:3.5.0-SNAPSHOT --file docker/Dockerfile .
+            docker build --tag $CR_URL/$CR_REPOSITORY/spring-feature-service:3.5.0-SNAPSHOT --file docker/Dockerfile .
 
       - name: Docker login to Yandex Cloud CR
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
