@@ -10,7 +10,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
-
 @TestConfiguration(proxyBeanMethods = false)
 @Testcontainers
 @Profile("test")
