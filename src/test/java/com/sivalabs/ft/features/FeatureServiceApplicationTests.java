@@ -2,10 +2,12 @@ package com.sivalabs.ft.features;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.kafka.test.context.EmbeddedKafka;
 
 @SpringBootTest
-@Import(TestcontainersConfiguration.class)
+@EmbeddedKafka(
+        partitions = 1,
+        topics = {"test-topic"})
 class FeatureServiceApplicationTests {
 
     @Test

@@ -12,7 +12,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration(proxyBeanMethods = false)
 @Testcontainers
-@Profile("test")
+@Profile("posrtgres")
 public class TestcontainersConfiguration {
 
     @Container
