@@ -11,10 +11,8 @@ spec:
       {{- include "app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        helm.sh/hook-time: {{ now | quote }}
       labels:
         {{- include "app.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
