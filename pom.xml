@@ -257,6 +257,10 @@
             <id>nucleon-forge-axile</id>
             <name>Nucleon Forge Axile</name>
             <url>https://maven.pkg.github.com/Nucleon-Forge/axile</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
 
