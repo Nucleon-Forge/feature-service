@@ -226,13 +226,6 @@
                 <configuration>
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>
                     <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <includeOnlyProperties>
-                        <includeOnlyProperty>^git.branch$</includeOnlyProperty>
-                        <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
-                        <includeOnlyProperty>^git.commit.user.name$</includeOnlyProperty>
-                        <includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
-                    </includeOnlyProperties>
                 </configuration>
             </plugin>
             <plugin>
