@@ -11,9 +11,14 @@ jobs:
   build-source:
     runs-on: ubuntu-latest
     env:
-      # These are needed in order to publish the final build artifacts into GitHub package registry
-      USERNAME: ${{ github.actor }}
-      TOKEN: ${{ secrets.TOKEN }}
+      # Since this path is used in multiple places, it’s better to store it in a separate variable.
+      FEATURE_SERVICE: feature-service:0.0.2-SNAPSHOT
+      # Variables and credentials for downloading dependencies from Nexus
+      NEXUS_USER: ${{ secrets.NEXUS_USER }}
+      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      NEXUS_HOST_PORT: ${{ secrets.NEXUS_HOST_PORT }}
+      STORE_PASS: ${{ secrets.STORE_PASS }}
+      # Variables to access k8s
       DOCKER_CR_OAUTH_TOKEN: ${{ secrets.DOCKER_CR_OAUTH_TOKEN }}
       CR_URL: ${{ vars.CR_URL }}
       CR_REPOSITORY: ${{ vars.CR_REPOSITORY }}
@@ -29,6 +34,11 @@ jobs:
           java-version: '24'
           cache: maven
 
+      - name: Download and trust Nexus SSL certificate
+        run: |
+          openssl s_client -connect $NEXUS_HOST_PORT -showcerts </dev/null 2>/dev/null | openssl x509 -outform PEM > nexus.crt
+          sudo keytool -importcert -file nexus.crt -alias nexus-ssl -keystore $JAVA_HOME/lib/security/cacerts -storepass $STORE_PASS -noprompt
+
       - name: Build with Maven
         run: |
           mvn -B -s settings.xml clean package
@@ -40,7 +50,7 @@ jobs:
       - name: Build Docker Image
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
         run: |
-          docker build --tag $CR_URL/$CR_REPOSITORY/feature-service:0.0.2-SNAPSHOT --file docker/Dockerfile .
+          docker build --tag $CR_URL/$CR_REPOSITORY/$FEATURE_SERVICE --file docker/Dockerfile .
 
       - name: Docker login to Yandex Cloud CR
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
@@ -48,7 +58,7 @@ jobs:
 
       - name: Docker push to Yandex Cloud CR
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
-        run: docker push $CR_URL/$CR_REPOSITORY/feature-service:0.0.2-SNAPSHOT
+        run: docker push $CR_URL/$CR_REPOSITORY/$FEATURE_SERVICE
 
       - name: Docker logout
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
@@ -68,4 +78,4 @@ jobs:
           touch ~/.kube/config
           echo "$KUBE_CONFIG_BASE64" | base64 --decode > ~/.kube/config
           chmod 600 ~/.kube/config
-          helm upgrade --install feature-service . --set image.ref=$CR_URL/$CR_REPOSITORY/feature-service:0.0.2-SNAPSHOT -f values.yaml
+          helm upgrade --install feature-service . --set image.ref=$CR_URL/$CR_REPOSITORY/$FEATURE_SERVICE -f values.yaml

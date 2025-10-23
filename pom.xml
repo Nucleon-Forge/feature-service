@@ -273,7 +273,10 @@
         <repository>
             <id>nucleon-forge-axile</id>
             <name>Nucleon Forge Axile</name>
-            <url>https://maven.pkg.github.com/Nucleon-Forge/axile</url>
+            <url>https://${env.NEXUS_HOST_PORT}/repository/axile-monorepo/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
