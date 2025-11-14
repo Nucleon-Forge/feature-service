@@ -46,34 +46,34 @@ jobs:
           mvn -B -s settings.xml clean package
 
       - name: Set up Docker
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'monorepo-backend-updated'}}
         uses: docker/setup-docker-action@v4
 
       - name: Build Docker Image
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'monorepo-backend-updated'}}
         run: |
           docker build --tag $CR_URL/$CR_REPOSITORY/$FEATURE_SERVICE --file docker/Dockerfile .
 
       - name: Docker login to Yandex Cloud CR
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'monorepo-backend-updated'}}
         run: echo $DOCKER_CR_OAUTH_TOKEN | docker login --username oauth --password-stdin $CR_URL
 
       - name: Docker push to Yandex Cloud CR
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'monorepo-backend-updated'}}
         run: docker push $CR_URL/$CR_REPOSITORY/$FEATURE_SERVICE
 
       - name: Docker logout
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'monorepo-backend-updated'}}
         run: docker logout
 
       - name: Setup Helm
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'monorepo-backend-updated'}}
         uses: azure/setup-helm@v4.3.0
         with:
           version: v3.14.0
 
       - name: Deploy spring-feature-service to K8S
-        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'monorepo-backend-updated'}}
         working-directory: chart
         run: |
           mkdir -p ~/.kube
