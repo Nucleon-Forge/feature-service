@@ -83,11 +83,10 @@
         </dependency>
 
         <dependency>
-            <groupId>com.nucleonforge.axile</groupId>
+            <groupId>com.nucleonforge.axelix</groupId>
             <artifactId>auto-configuration</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -271,8 +270,8 @@
             </snapshots>
         </repository>
         <repository>
-            <id>nucleon-forge-axile</id>
-            <name>Nucleon Forge Axile</name>
+            <id>nucleon-forge-axelix</id>
+            <name>Nucleon Forge Axelix</name>
             <url>https://${env.NEXUS_HOST_PORT}/repository/axile-monorepo/</url>
             <releases>
                 <enabled>true</enabled>

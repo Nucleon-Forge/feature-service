@@ -1,7 +1,7 @@
 <settings>
 	<servers>
 		<server>
-			<id>nucleon-forge-axile</id>
+			<id>nucleon-forge-axelix</id>
 			<username>${env.NEXUS_USER}</username>
 			<password>${env.NEXUS_PASSWORD}</password>
 		</server>
