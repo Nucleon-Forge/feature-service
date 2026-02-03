@@ -84,7 +84,7 @@
 
         <dependency>
             <groupId>com.axelixlabs.axelix</groupId>
-            <artifactId>axelix-spring-boot-2</artifactId>
+            <artifactId>axelix-spring-boot-3</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
