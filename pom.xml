@@ -83,7 +83,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.axelixlabs.axelix</groupId>
+            <groupId>com.axelixlabs</groupId>
             <artifactId>axelix-spring-boot-3</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
